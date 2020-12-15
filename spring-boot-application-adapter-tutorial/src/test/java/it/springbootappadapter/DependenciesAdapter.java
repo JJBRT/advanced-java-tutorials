@@ -15,7 +15,7 @@ import org.burningwave.core.io.PathHelper;
 import org.burningwave.tools.dependencies.Capturer.Result;
 import org.burningwave.tools.dependencies.TwoPassCapturer;
 
-public class DependenciesExtractor {
+public class DependenciesAdapter {
 	
 	
 	public static void main(String[] args) throws Exception {
@@ -27,7 +27,7 @@ public class DependenciesExtractor {
 			String jdkHome = componentContainer.getConfigProperty("paths.jdk-home");
 			if (jdkHome == null || !FileSystemItem.ofPath(jdkHome).exists()) {
 				ManagedLoggersRepository.logError(
-					() -> DependenciesExtractor.class.getName(),
+					() -> DependenciesAdapter.class.getName(),
 					"\"{}\" is not a valid jdk home path: please provide a correct jdk home in the property 'paths.jdk-home' inside the file \"{}\"",
 					componentContainer.getConfigProperty("paths.jdk-home"),
 					pathHelper.getAbsolutePathOfResource("../../src/main/resources/burningwave.properties")
@@ -47,7 +47,7 @@ public class DependenciesExtractor {
 				0L
 		);
 		result.waitForTaskEnding();
-		ManagedLoggersRepository.logInfo(() -> DependenciesExtractor.class.getName(), "Elapsed time: " + getFormattedDifferenceOfMillis(System.currentTimeMillis(), initialTime));
+		ManagedLoggersRepository.logInfo(() -> DependenciesAdapter.class.getName(), "Elapsed time: " + getFormattedDifferenceOfMillis(System.currentTimeMillis(), initialTime));
 	}
 	
 	private static String getFormattedDifferenceOfMillis(long value1, long value2) {
