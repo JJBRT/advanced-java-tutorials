@@ -1,4 +1,4 @@
-package it.springbootappadapter;
+package org.springbootappadapter;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.JVMInfo;
 import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
