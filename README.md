@@ -8,7 +8,7 @@ A collection of examples about **advanced Java programming**. Here you will find
 * [how to make applications created with old Java versions work on Java 9 and later versions](https://dev.to/bw_software/making-applications-created-with-old-java-versions-work-on-java-9-and-later-versions-19ld)
 
 ## Instructions
-For the tutorial related to "[how to make applications created with old Java versions work on Java 9 and later versions](https://dev.to/bw_software/making-applications-created-with-old-java-versions-work-on-java-9-and-later-versions-19ld)" in the folder "[spring-boot-application-adapter-tutorial]"(https://github.com/JJBRT/advanced-java-tutorials/tree/master/spring-boot-application-adapter-tutorial) notice that to make it works you need:
+For the tutorial related to "[how to make applications created with old Java versions work on Java 9 and later versions](https://dev.to/bw_software/making-applications-created-with-old-java-versions-work-on-java-9-and-later-versions-19ld)" in the folder "[spring-boot-application-adapter-tutorial](https://github.com/JJBRT/advanced-java-tutorials/tree/master/spring-boot-application-adapter-tutorial)" notice that to make it works you need:
 
 * to set the property '**paths.jdk-home**' of [**burningwave.properties**](https://github.com/JJBRT/advanced-java-tutorials/blob/master/spring-boot-application-adapter-tutorial/src/test/resources/burningwave.properties#L1) file with a jdk 8 home
 
