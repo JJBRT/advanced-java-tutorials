@@ -5,8 +5,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.jjbrt</groupId>
-	<artifactId>dependency-injection-tutorial</artifactId>
+	<groupId>com.github.jjbrt.java-tutorials</groupId>
+	<artifactId>dependency-injection</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<dependencies>

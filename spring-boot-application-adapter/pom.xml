@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.github.jjbrt</groupId>
-	<artifactId>spring-boot-application-adapter-tutorial</artifactId>
+	<groupId>com.github.jjbrt.java-tutorials</groupId>
+	<artifactId>spring-boot-application-adapter</artifactId>
 	<packaging>war</packaging>
 	<name>Spring Boot application adapter tutorial</name>
 	<description>Spring Boot application adapter tutorial</description>
