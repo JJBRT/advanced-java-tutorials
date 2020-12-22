@@ -32,7 +32,7 @@ public class InjectionUtil {
 					? field.getAnnotation(Qualifier.class).value()
 					: null;
 			Object fieldInstance = injector.getBeanInstance(field.getType(), field.getName(), qualifier);
-			field.set(classInstance, fieldInstance);
+			Fields.setDirect(classInstance, field, fieldInstance);
 			autowire(injector, fieldInstance.getClass(), fieldInstance);
 		}
 	}

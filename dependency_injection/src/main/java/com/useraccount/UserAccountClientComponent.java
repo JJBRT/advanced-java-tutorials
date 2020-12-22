@@ -24,6 +24,6 @@ public class UserAccountClientComponent {
 	public void displayUserAccount() {
 		String username = userService.getUserName();
 		Long accountNumber = accountService.getAccountNumber(username);
-		System.out.println("\n\tUser Name: " + username + "\n\tAccount Number: " + accountNumber);
+		System.out.println("\n\tUser Name: " + username + "\n\tAccount Number: " + accountNumber + "\n");
 	}
 }
