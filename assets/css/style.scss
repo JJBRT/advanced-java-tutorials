@@ -5,3 +5,17 @@
 .page-header {
   background-image: linear-gradient(120deg, #535355, #e46825);
 }
+
+h1.project-name {
+	font-family: 'Barbatrick';
+	font-size: 5.25rem;
+	font-style: italic;
+}
+
+@font-face {
+    font-family: 'Barbatrick';
+    src: local('Barbatrick'), local('Barbatrick'),
+        url('./../fonts/barbatrick.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
