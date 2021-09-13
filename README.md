@@ -1,4 +1,4 @@
-# Advanced Java tuorials
+# Advanced Java tutorials
 
 <img src="https://raw.githubusercontent.com/JJBRT/advanced-java-tutorials/master/Java-logo.png" alt="Java-logo.png" height="180px" align="right"/>
 
