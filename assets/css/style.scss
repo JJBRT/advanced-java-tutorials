@@ -7,15 +7,33 @@
 }
 
 h1.project-name {
-	font-family: 'Barbatrick';
+	font-family: 'Tomcat Bold';
 	font-size: 4.25rem;
 	font-style: italic;
 }
 
 @font-face {
-    font-family: 'Barbatrick';
-    src: local('Barbatrick'), local('Barbatrick'),
-        url('./../fonts/barbatrick.ttf') format('truetype');
-    font-weight: 1;
+    font-family: 'Tomcat Bold';
+    src: url('Tomcat-Bold.eot');
+    src: local('Tomcat Bold'), local('Tomcat-Bold'),
+        url('./../Tomcat-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./../Tomcat-Bold.woff2') format('woff2'),
+        url('./../Tomcat-Bold.woff') format('woff'),
+        url('./../Tomcat-Bold.ttf') format('truetype');
+    font-weight: bold;
     font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tomcat Regular';
+    src: url('Tomcat-Regular.eot');
+    src: local('Tomcat'), local('Tomcat-Regular'),
+        url('./../Tomcat-Regular.eot?#iefix') format('embedded-opentype'),
+        url('./../Tomcat-Regular.woff2') format('woff2'),
+        url('./../Tomcat-Regular.woff') format('woff'),
+        url('./../Tomcat-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
