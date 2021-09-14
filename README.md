@@ -9,4 +9,4 @@ A collection of examples about **advanced Java programming**. Here you will find
 * [how to make reflection fully work on JDK 16 and later](https://dev.to/jjbrt/how-to-make-reflection-fully-work-on-jdk-16-and-later-ihp)
 
 
-**Any instructions to make each project work are indicated in the possible README.md file inside it**
+**Any instructions to make each project work are indicated in the possible README.md file inside it**.
