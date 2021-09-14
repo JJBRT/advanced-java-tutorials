@@ -45,7 +45,7 @@ public class FieldsHandler {
 		values = fields.getAll(classLoader);
 		
 		values.forEach((name, value) -> {
-			System.out.println("\t" + name + " =\n\t\t " + value);
+			System.out.println(name + " =\n\t\t " + value);
 		});
     }
    
