@@ -23,10 +23,13 @@ public class ModulesExporter {
     		Modules.exportAllToAll();
     	    Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
     	    method.setAccessible(true);
+    	    ClassLoader classLoader = new URLClassLoader(new URL[] {});
     	    method.invoke(
-    	    	new URLClassLoader(new URL[] {}),
+    	    	classLoader,
     	    	Resources.getClassPath(ModulesExporter.class).getURL()
     	    );
+    	    Class<?> fieldsHandlerClass = classLoader.loadClass("com.github.jjbrt.reflection.FieldsHandler");
+    	    System.out.println(fieldsHandlerClass.getName());
     	} catch (Exception exc) {
     		exc.printStackTrace();
     	}
