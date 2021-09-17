@@ -1,11 +1,11 @@
 package com.github.jjbrt.reflection;
 
-import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
-import static org.burningwave.core.assembler.StaticComponentContainer.Resources;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
+
 
 public class ModulesExporter {
 	
@@ -21,21 +21,15 @@ public class ModulesExporter {
     public static void execute() {
     	try {
     		Modules.exportAllToAll();
-    	    Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-    	    method.setAccessible(true);
-    	    ClassLoader classLoader = new URLClassLoader(new URL[] {}, null);
-    	    method.invoke(
-    	    	classLoader,
-    	    	Resources.getClassPath(ModulesExporter.class).getURL()
-    	    );
-    	    Class<?> fieldsHandlerClass = classLoader.loadClass(FieldsHandler.class.getName());
-    	    if (FieldsHandler.class != fieldsHandlerClass) {
-    	    	System.out.println(
-    	    		FieldsHandler.class.toString() + " and " + fieldsHandlerClass.toString() + " are loaded from the same bytecode but they are different instances:" +
-    	    		"\n\t" + FieldsHandler.class + " is loaded by " + FieldsHandler.class.getClassLoader() +
-    	    		"\n\t" + fieldsHandlerClass + " is loaded by " + fieldsHandlerClass.getClassLoader()
-    	    	);
-    	    }
+    		Class<?> bootClassLoaderClass = Class.forName("jdk.internal.loader.ClassLoaders$BootClassLoader");
+    		Constructor<? extends ClassLoader> constructor =
+    			ClassLoader.getPlatformClassLoader().getClass().getDeclaredConstructor(bootClassLoaderClass);
+    		constructor.setAccessible(true);
+    		Class<?> classLoadersClass = Class.forName("jdk.internal.loader.ClassLoaders");
+    		Method bootClassLoaderRetriever = classLoadersClass.getDeclaredMethod("bootLoader");
+    		bootClassLoaderRetriever.setAccessible(true);
+    		ClassLoader newBuiltinclassLoader = constructor.newInstance(bootClassLoaderRetriever.invoke(classLoadersClass));
+    		System.out.println(newBuiltinclassLoader + " instantiated");
     	} catch (Exception exc) {
     		exc.printStackTrace();
     	}
