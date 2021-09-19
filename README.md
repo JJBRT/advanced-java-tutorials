@@ -11,5 +11,6 @@ A collection of examples about advanced Java programming. Here you will find tut
 * [how to make applications created with old Java versions work on Java 9 and later versions](https://dev.to/bw_software/making-applications-created-with-old-java-versions-work-on-java-9-and-later-versions-19ld)
 * [how to make reflection fully work on JDK 16 and later](https://dev.to/jjbrt/how-to-make-reflection-fully-work-on-jdk-16-and-later-ihp)
 
+<br/>
 
 **Any instructions to make each project work are indicated in the possible README.md file inside it**.
