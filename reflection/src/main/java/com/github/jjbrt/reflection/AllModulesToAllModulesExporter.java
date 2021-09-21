@@ -11,10 +11,10 @@ public class AllModulesToAllModulesExporter {
 	
 	public static void main(String[] args) {
         try {
-		execute();
-	} catch (Throwable exc) {
-		exc.printStackTrace();
-	}
+			execute();
+		} catch (Throwable exc) {
+			exc.printStackTrace();
+		}
     }
 	
 	
