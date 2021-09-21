@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 
+@SuppressWarnings("unchecked")
 public class AllModulesToAllModulesExporter {
 	
 	public static void main(String[] args) {
@@ -22,8 +23,10 @@ public class AllModulesToAllModulesExporter {
     	try {
     		Modules.exportAllToAll();
     		Class<?> bootClassLoaderClass = Class.forName("jdk.internal.loader.ClassLoaders$BootClassLoader");
-    		Constructor<? extends ClassLoader> constructor =
-    			ClassLoader.getPlatformClassLoader().getClass().getDeclaredConstructor(bootClassLoaderClass);
+			Constructor<? extends ClassLoader> constructor = 
+    			(Constructor<? extends ClassLoader>)
+    				Class.forName("jdk.internal.loader.ClassLoaders$PlatformClassLoader")
+    					.getDeclaredConstructor(bootClassLoaderClass);
     		constructor.setAccessible(true);
     		Class<?> classLoadersClass = Class.forName("jdk.internal.loader.ClassLoaders");
     		Method bootClassLoaderRetriever = classLoadersClass.getDeclaredMethod("bootLoader");
