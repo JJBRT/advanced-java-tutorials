@@ -26,13 +26,17 @@ public class DependenciesAdapter {
 		if (JVMInfo.getVersion() > 8) {
 			String jdkHome = componentContainer.getConfigProperty("paths.jdk-home");
 			if (jdkHome == null || !FileSystemItem.ofPath(jdkHome).exists()) {
+				String errorMessage = "\"{}\" is not a valid jdk home path: please provide a correct jdk home in the property 'paths.jdk-home' inside the file \"{}\"";
+				Object[] errorMessageParams = new Object[] {
+					componentContainer.getConfigProperty("paths.jdk-home"),
+					pathHelper.getAbsolutePathOfResource("../../../spring-boot-application-adapter/src/test/resources/burningwave.properties")
+				};
 				ManagedLoggersRepository.logError(
 					() -> DependenciesAdapter.class.getName(),
-					"\"{}\" is not a valid jdk home path: please provide a correct jdk home in the property 'paths.jdk-home' inside the file \"{}\"",
-					componentContainer.getConfigProperty("paths.jdk-home"),
-					pathHelper.getAbsolutePathOfResource("../../src/main/resources/burningwave.properties")
+					errorMessage, errorMessageParams
+					
 				);
-				Throwables.throwException("Unvalid jdk home path");
+				Throwables.throwException(errorMessage, errorMessageParams);
 			}
 			paths.addAll(pathHelper.getPaths("dependencies-capturer.additional-resources-path"));
 		}
