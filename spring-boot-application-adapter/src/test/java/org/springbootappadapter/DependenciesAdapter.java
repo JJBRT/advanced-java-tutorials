@@ -1,8 +1,8 @@
 package org.springbootappadapter;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.JVMInfo;
 import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
-import static org.burningwave.core.assembler.StaticComponentContainer.Throwables;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +36,7 @@ public class DependenciesAdapter {
 					errorMessage, errorMessageParams
 					
 				);
-				Throwables.throwException(errorMessage, errorMessageParams);
+				Driver.throwException(errorMessage, errorMessageParams);
 			}
 			paths.addAll(pathHelper.getPaths("dependencies-capturer.additional-resources-path"));
 		}
