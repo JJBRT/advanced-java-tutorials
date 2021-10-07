@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>10.0.0</version>
+			<version>10.1.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>io.github.toolfactory</groupId>
