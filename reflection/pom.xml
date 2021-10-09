@@ -21,12 +21,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.burningwave</groupId>
-			<artifactId>jvm-driver</artifactId>
-			<version>4.0.2</version>
-		</dependency>
+
 	</dependencies>
 
 	<properties>
