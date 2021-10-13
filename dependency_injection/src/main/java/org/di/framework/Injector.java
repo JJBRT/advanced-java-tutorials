@@ -12,10 +12,8 @@ import java.util.stream.Collectors;
 import javax.management.RuntimeErrorException;
 
 import org.burningwave.core.assembler.ComponentContainer;
-import org.burningwave.core.classes.CacheableSearchConfig;
 import org.burningwave.core.classes.ClassCriteria;
 import org.burningwave.core.classes.ClassHunter;
-import org.burningwave.core.classes.ClassHunter.SearchResult;
 import org.burningwave.core.classes.SearchConfig;
 import org.di.framework.annotations.Component;
 import org.di.framework.utils.InjectionUtil;
@@ -72,7 +70,7 @@ public class Injector {
 		ComponentContainer componentConatiner = ComponentContainer.getInstance();
 		ClassHunter classHunter = componentConatiner.getClassHunter();
 		String packageRelPath = mainClass.getPackage().getName().replace(".", "/");
-		try (SearchResult result = classHunter.findBy(
+		try (ClassHunter.SearchResult result = classHunter.findBy(
 			SearchConfig.forResources(
 				packageRelPath
 			).by(ClassCriteria.create().allThoseThatMatch(cls -> {
@@ -109,16 +107,14 @@ public class Injector {
 		ComponentContainer componentConatiner = ComponentContainer.getInstance();
 		ClassHunter classHunter = componentConatiner.getClassHunter();
 		String packageRelPath = packageName.replace(".", "/");
-		CacheableSearchConfig config = SearchConfig.forResources(
+		SearchConfig config = SearchConfig.forResources(
 			packageRelPath
 		);
 		if (!recursive) {
-			config.notRecursiveOnPath(
-				packageRelPath, false
-			);
+			config.findInChildren();
 		}
 		
-		try (SearchResult result = classHunter.loadInCache(config).find()) {
+		try (ClassHunter.SearchResult result = classHunter.findBy(config)) {
 			Collection<Class<?>> classes = result.getClasses();
 			return classes.toArray(new Class[classes.size()]);
 		}	
