@@ -48,7 +48,7 @@ public class DependenciesAdapter {
 				paths,
 				System.getProperty("user.home") + "/Desktop/dependencies",
 				true,
-				10L
+				0L
 		);
 		result.waitForTaskEnding();
 		ManagedLoggersRepository.logInfo(() -> DependenciesAdapter.class.getName(), "Elapsed time: " + getFormattedDifferenceOfMillis(System.currentTimeMillis(), initialTime));
