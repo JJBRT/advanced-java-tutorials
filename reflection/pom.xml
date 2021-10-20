@@ -8,24 +8,20 @@
 	<groupId>com.github.jjbrt.java-tutorials</groupId>
 	<artifactId>reflection</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.burningwave</groupId>
-			<artifactId>core</artifactId>
-			<version>12.9.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>io.github.toolfactory</groupId>
-					<artifactId>narcissus</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-	</dependencies>
-
+	
 	<properties>
 		<maven.compiler.source>16</maven.compiler.source>
 		<maven.compiler.target>16</maven.compiler.target>
 	</properties>
+	
+	<dependencies>
+	
+		<dependency>
+			<groupId>org.burningwave</groupId>
+			<artifactId>core</artifactId>
+			<version>12.9.1</version>
+		</dependency>
+
+	</dependencies>
+
 </project>
