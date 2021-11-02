@@ -1,0 +1,40 @@
+---
+---
+
+@import "{{ site.theme }}";
+.page-header {
+  background-image: linear-gradient(120deg, #535355, #e46825);
+}
+
+h1.project-name {
+	font-family: 'Tomcat Bold';
+	font-size: 4.25em;
+	font-style: italic;
+	line-height: 1.00em;
+}
+
+@font-face {
+    font-family: 'Tomcat Bold';
+    src: url('Tomcat-Bold.eot');
+    src: local('Tomcat Bold'), local('Tomcat-Bold'),
+        url('./../fonts/Tomcat-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./../fonts/Tomcat-Bold.woff2') format('woff2'),
+        url('./../fonts/Tomcat-Bold.woff') format('woff'),
+        url('./../fonts/Tomcat-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tomcat Regular';
+    src: url('Tomcat-Regular.eot');
+    src: local('Tomcat'), local('Tomcat-Regular'),
+        url('./../fonts/Tomcat-Regular.eot?#iefix') format('embedded-opentype'),
+        url('./../fonts/Tomcat-Regular.woff2') format('woff2'),
+        url('./../fonts/Tomcat-Regular.woff') format('woff'),
+        url('./../fonts/Tomcat-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
