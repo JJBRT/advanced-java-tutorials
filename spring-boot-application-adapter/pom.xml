@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>tools</artifactId>
-			<version>0.10.55</version>
+			<version>0.10.56</version>
 		</dependency>	
 		
 		<dependency>
