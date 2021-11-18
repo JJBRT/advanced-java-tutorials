@@ -7,6 +7,8 @@ import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLog
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.burningwave.core.iterable.IterableObjectHelper.IterationConfig;
 
@@ -15,7 +17,7 @@ public class ListsIterator {
 	
 	public static void main(String[] args) {
         try {
-    		iterate(buildInput());
+    		iterate(buildInputCollection());
 		} catch (Throwable exc) {
 			exc.printStackTrace();
 		}
@@ -23,32 +25,28 @@ public class ListsIterator {
 
 
 
-	private static Collection<Integer> buildInput() {
-		Collection<Integer> input = new ArrayList<>();
-		for (int i = 0; i < 10000000; i++) {
-			input.add(i + 1);
-		}
-		return input;
+	private static Collection<Integer> buildInputCollection() {
+		return IntStream.rangeClosed(1, 1000000).boxed().collect(Collectors.toList());
 	}
 	
 
 	
-	private static void iterate(Collection<Integer> input) {
+	private static void iterate(Collection<Integer> inputCollection) {
 		long initialTime = System.currentTimeMillis();
-		List<Integer> output = IterableObjectHelper.createIterateAndGetTask(
-			IterationConfig.of(input)
+		List<Integer> outputCollection = IterableObjectHelper.createIterateAndGetTask(
+			IterationConfig.of(inputCollection)
 			.parallelIf(inputColl -> inputColl.size() > 2)
 			.withOutput(new ArrayList<Integer>())
 			.withAction((number, outputCollectionSupplier) -> {
-                if (number > input.size() / 2) {
+                if (number > inputCollection.size() / 2) {
                     //Terminating the current thread iteration early.
                     IterableObjectHelper.terminateCurrentThreadIteration();
                     //If we need to terminate all threads iteration (useful for a find first iteration) we must use
                     //IterableObjectHelper.terminateIteration();
                 }
 				if ((number % 2) == 0) {						
-					outputCollectionSupplier.accept(outputCollection -> 
-						outputCollection.add(number)
+					outputCollectionSupplier.accept(outputColl -> 
+						outputColl.add(number)
 					);
 				}
 			})
@@ -57,8 +55,8 @@ public class ListsIterator {
 		ManagedLoggersRepository.logInfo(
 			ListsIterator.class::getName,
 			"\n\n\tInput collection size: {}\n\tOutput collection size: {}\n\tTotal elapsed time: {}s\n",
-			input.size(),
-			output.size(),
+			inputCollection.size(),
+			outputCollection.size(),
 			getFormattedDifferenceOfMillis(System.currentTimeMillis(),initialTime)
 		);
 	}

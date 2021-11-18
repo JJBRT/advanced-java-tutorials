@@ -12,7 +12,7 @@ public class ArraysIterator {
 	
 	public static void main(String[] args) {
         try {
-    		iterate(buildInput());
+    		iterate(buildInputCollection());
 		} catch (Throwable exc) {
 			exc.printStackTrace();
 		}
@@ -20,7 +20,7 @@ public class ArraysIterator {
 
 
 
-	private static Object[] buildInput() {
+	private static Object[] buildInputCollection() {
 		Object[] input = new Object[100000000];
 		for (int i = 0; i < input.length; i++) {
 			input[i] = Integer.valueOf(i + 1);
@@ -30,28 +30,28 @@ public class ArraysIterator {
 	
 
 	
-	private static void iterate(Object[] input) {
+	private static void iterate(Object[] inputCollection) {
 		long initialTime = System.currentTimeMillis();
-		List<Long> output = IterableObjectHelper.createIterateAndGetTask(
-			IterationConfig.of(input)
+		List<Long> outputCollection = IterableObjectHelper.createIterateAndGetTask(
+			IterationConfig.of(inputCollection)
 			.parallelIf(inputColl -> inputColl.length > 2)
 			.withOutput(new ArrayList<Long>())
 			.withAction((number, outputCollectionSupplier) -> {
 				int intNumber = (int)number;
-                if ((int)number <= input.length - 10) {
+                if ((int)number <= inputCollection.length - 10) {
                     //Skipping iterated item
                 	return;
                 }
 				if (((int)number % 2) == 0) {						
-					outputCollectionSupplier.accept(outputCollection -> 
-						outputCollection.add((Long.valueOf(intNumber) * intNumber))
+					outputCollectionSupplier.accept(outputColl -> 
+						outputColl.add((Long.valueOf(intNumber) * intNumber))
 					);
 				}
 			})
 			
 		).submit().join();
         IterableObjectHelper.iterate(
-            IterationConfig.of(output)
+            IterationConfig.of(outputCollection)
             //Disabling parallel iteration
             .parallelIf(inputColl -> false)
             .withAction((number) -> {
@@ -62,8 +62,8 @@ public class ArraysIterator {
 		ManagedLoggersRepository.logInfo(
 			ListsIterator.class::getName,
 			"\n\n\tInput collection size: {}\n\tOutput collection size: {}\n\tTotal elapsed time: {}s\n",
-			input.length,
-			output.size(),
+			inputCollection.length,
+			outputCollection.size(),
 			getFormattedDifferenceOfMillis(System.currentTimeMillis(),initialTime)
 		);
 	}
