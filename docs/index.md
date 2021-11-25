@@ -5,7 +5,7 @@
 
 A collection of examples about advanced Java programming. Here you will find tutorials about:
 
-* [how to create your own dependency injection framework](https://dev.to/bw_software/how-to-create-your-own-dependency-injection-framework-o2l)
+* [how to create your own dependency injection framework](https://jim-jerald-burton.medium.com/how-to-create-your-own-dependency-injection-framework-in-java-12a6e52aeff9)
 * [how to make applications created with old Java versions work on Java 9 and later versions](https://dev.to/bw_software/making-applications-created-with-old-java-versions-work-on-java-9-and-later-versions-19ld)
 * [how to make reflection fully work on Java 9 and later](https://jim-jerald-burton.medium.com/making-reflection-fully-work-on-java-9-and-later-767320344d1d)
 * [how to export all modules to all modules at runtime on Java 9 and later](https://jim-jerald-burton.medium.com/exporting-all-modules-to-all-modules-at-runtime-on-java-9-and-later-3517eb479701)
