@@ -2,7 +2,7 @@ package org.springbootappadapter;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.JVMInfo;
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
