@@ -2,7 +2,7 @@ package com.github.jjbrt.iteration;
 
 
 import static org.burningwave.core.assembler.StaticComponentContainer.IterableObjectHelper;
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,7 +52,7 @@ public class ListsIterator {
 			})
 			
 		).submit().join();
-		ManagedLoggersRepository.logInfo(
+		ManagedLoggerRepository.logInfo(
 			ListsIterator.class::getName,
 			"\n\n\tInput collection size: {}\n\tOutput collection size: {}\n\tTotal elapsed time: {}s\n",
 			inputCollection.size(),

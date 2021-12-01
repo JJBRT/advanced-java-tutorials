@@ -1,7 +1,7 @@
 package com.github.jjbrt.iteration;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.IterableObjectHelper;
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +55,11 @@ public class ArraysIterator {
             //Disabling parallel iteration
             .parallelIf(inputColl -> false)
             .withAction((number) -> {
-                ManagedLoggersRepository.logInfo(ArraysIterator.class::getName, "Iterated number: {}", number);
+                ManagedLoggerRepository.logInfo(ArraysIterator.class::getName, "Iterated number: {}", number);
             })    
         );
         
-		ManagedLoggersRepository.logInfo(
+        ManagedLoggerRepository.logInfo(
 			ListsIterator.class::getName,
 			"\n\n\tInput collection size: {}\n\tOutput collection size: {}\n\tTotal elapsed time: {}s\n",
 			inputCollection.length,

@@ -2,7 +2,7 @@ package org.springbootappadapter;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.JVMInfo;
-import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggersRepository;
+import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public class DependenciesAdapter {
 					componentContainer.getConfigProperty("paths.jdk-home"),
 					pathHelper.getAbsolutePathOfResource("../../../spring-boot-application-adapter/src/test/resources/burningwave.properties")
 				};
-				ManagedLoggersRepository.logError(
+				ManagedLoggerRepository.logError(
 					() -> DependenciesAdapter.class.getName(),
 					errorMessage, errorMessageParams
 					
@@ -51,7 +51,7 @@ public class DependenciesAdapter {
 				0L
 		);
 		result.waitForTaskEnding();
-		ManagedLoggersRepository.logInfo(() -> DependenciesAdapter.class.getName(), "Elapsed time: " + getFormattedDifferenceOfMillis(System.currentTimeMillis(), initialTime));
+		ManagedLoggerRepository.logInfo(() -> DependenciesAdapter.class.getName(), "Elapsed time: " + getFormattedDifferenceOfMillis(System.currentTimeMillis(), initialTime));
 	}
 	
 	private static String getFormattedDifferenceOfMillis(long value1, long value2) {
