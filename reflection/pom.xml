@@ -19,13 +19,13 @@
 		<dependency>
 		    <groupId>org.burningwave</groupId>
 		    <artifactId>jvm-driver</artifactId>
-		    <version>6.7.4</version>
+		    <version>6.8.2</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>12.44.0</version>
+			<version>12.45.0</version>
 			<exclusions>
 		        <exclusion>
 		            <groupId>io.github.toolfactory</groupId>
