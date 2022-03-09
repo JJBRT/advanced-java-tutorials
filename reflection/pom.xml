@@ -15,23 +15,11 @@
 	</properties>
 	
 	<dependencies>
-	
-		<dependency>
-		    <groupId>org.burningwave</groupId>
-		    <artifactId>jvm-driver</artifactId>
-		    <version>6.8.6</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>12.46.0</version>
-			<exclusions>
-		        <exclusion>
-		            <groupId>io.github.toolfactory</groupId>
-		            <artifactId>narcissus</artifactId>
-		        </exclusion>
-		    </exclusions>
+			<version>12.47.0</version>
 		</dependency>
 
 	</dependencies>
