@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>org.burningwave</groupId>
 			<artifactId>core</artifactId>
-			<version>12.55.1</version>
+			<version>12.55.2</version>
 		</dependency>
 
 	</dependencies>
