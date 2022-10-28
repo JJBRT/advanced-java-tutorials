@@ -10,7 +10,7 @@ A collection of examples about advanced Java programming. Here you will find tut
 * [how to make reflection fully work on Java 9 and later](https://jim-jerald-burton.medium.com/making-reflection-fully-work-on-java-9-and-later-767320344d1d)
 * [how to export all modules to all modules at runtime on Java 9 and later](https://jim-jerald-burton.medium.com/exporting-all-modules-to-all-modules-at-runtime-on-java-9-and-later-3517eb479701)
 * [how to iterate collections and arrays in parallel by setting thread priority](https://dev.to/bw_software/iterating-collections-and-arrays-in-parallel-5acg)
-* [how to configure hostname resolution to use a universal custom hostname resolver in Java](https://dev.to/jjbrt/how-to-configure-hostname-resolution-to-use-a-universal-custom-hostname-resolver-in-java-14p0)
+* [how to configure hostname resolution to use a universal custom hostname resolver](https://dev.to/jjbrt/how-to-configure-hostname-resolution-to-use-a-universal-custom-hostname-resolver-in-java-14p0)
 
 <br/>
 
