@@ -44,6 +44,7 @@ public class HostNameResolutionFromYAMLCustomizer {
     	//Installing the host resolvers
 		HostResolverService.INSTANCE.install(
 			new MappedHostResolver(hostAliasesSupplier),
+			//This is the system default resolving wrapper
 			DefaultHostResolver.INSTANCE
 		);
 

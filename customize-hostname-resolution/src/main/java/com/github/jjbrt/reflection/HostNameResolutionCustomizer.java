@@ -35,6 +35,7 @@ public class HostNameResolutionCustomizer {
     	//Installing the host resolvers
 		HostResolverService.INSTANCE.install(
 			new MappedHostResolver(hostAliases),
+			//This is the system default resolving wrapper
 			DefaultHostResolver.INSTANCE
 		);
 
