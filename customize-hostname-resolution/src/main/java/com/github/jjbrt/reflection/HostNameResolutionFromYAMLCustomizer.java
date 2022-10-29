@@ -30,9 +30,9 @@ public class HostNameResolutionFromYAMLCustomizer {
     }
 
     @SuppressWarnings("unchecked")
-	public static List<Map<String, Object>> loadConfiguration(String fileName) {
+	public static List<Map<String, Object>> loadConfiguration(String fileNameRelativePathFromClasspath) {
     	ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-    	try (InputStream inputStream = ComponentContainer.getInstance().getPathHelper().getResourceAsStream("hosts.yml")) {
+    	try (InputStream inputStream = ComponentContainer.getInstance().getPathHelper().getResourceAsStream(fileNameRelativePathFromClasspath)) {
     		return (List<Map<String, Object>>)mapper.readValue(inputStream, Map.class).get("hostAliases");
     	} catch (IOException exc) {
 			return Driver.throwException(exc);
