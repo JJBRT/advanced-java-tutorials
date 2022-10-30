@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.burningwave.tools.dns.DefaultHostResolver;
-import org.burningwave.tools.dns.HostResolverService;
+import org.burningwave.tools.dns.HostResolutionRequestInterceptor;
 import org.burningwave.tools.dns.MappedHostResolver;
 
 public class HostNameResolutionCustomizer {
@@ -33,7 +33,7 @@ public class HostNameResolutionCustomizer {
     public static void execute(Map<String, String> hostAliases) {
 
     	//Installing the host resolvers
-		HostResolverService.INSTANCE.install(
+    	HostResolutionRequestInterceptor.INSTANCE.install(
 			new MappedHostResolver(hostAliases),
 			//This is the system default resolving wrapper
 			DefaultHostResolver.INSTANCE
@@ -46,7 +46,7 @@ public class HostNameResolutionCustomizer {
 		printHostInfo("google.com");
 
 		//Restoring hostname resolving to default and cleaning the cache
-		HostResolverService.INSTANCE.reset();
+		HostResolutionRequestInterceptor.INSTANCE.uninstall();
 
 		//Now we have reset the hostnames in the map will not be resolved...
 		printHostInfo("my.hostname.one");
@@ -57,7 +57,7 @@ public class HostNameResolutionCustomizer {
 		printHostInfo("google.com");
 
 		//Adding host aliases again
-		HostResolverService.INSTANCE.install(
+		HostResolutionRequestInterceptor.INSTANCE.install(
 			new MappedHostResolver(hostAliases),
 			DefaultHostResolver.INSTANCE
 		);

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 import org.burningwave.core.assembler.ComponentContainer;
 import org.burningwave.tools.dns.DefaultHostResolver;
-import org.burningwave.tools.dns.HostResolverService;
+import org.burningwave.tools.dns.HostResolutionRequestInterceptor;
 import org.burningwave.tools.dns.MappedHostResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +42,7 @@ public class HostNameResolutionFromYAMLCustomizer {
     public static void execute(Supplier<List<Map<String, Object>>> hostAliasesSupplier) {
 
     	//Installing the host resolvers
-		HostResolverService.INSTANCE.install(
+    	HostResolutionRequestInterceptor.INSTANCE.install(
 			new MappedHostResolver(hostAliasesSupplier),
 			//This is the system default resolving wrapper
 			DefaultHostResolver.INSTANCE
@@ -55,7 +55,7 @@ public class HostNameResolutionFromYAMLCustomizer {
 		printHostInfo("google.com");
 
 		//Restoring hostname resolving to default and cleaning the cache
-		HostResolverService.INSTANCE.reset();
+		HostResolutionRequestInterceptor.INSTANCE.uninstall();
 
 		//Now we have reset the hostnames in the map will not be resolved...
 		printHostInfo("my.hostname.one");
@@ -66,7 +66,7 @@ public class HostNameResolutionFromYAMLCustomizer {
 		printHostInfo("google.com");
 
 		//Adding host aliases again
-		HostResolverService.INSTANCE.install(
+		HostResolutionRequestInterceptor.INSTANCE.install(
 			new MappedHostResolver(hostAliasesSupplier),
 			DefaultHostResolver.INSTANCE
 		);
