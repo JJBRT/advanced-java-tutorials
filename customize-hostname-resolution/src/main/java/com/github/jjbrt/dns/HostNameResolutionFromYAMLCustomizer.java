@@ -1,4 +1,4 @@
-package com.github.jjbrt.reflection;
+package com.github.jjbrt.dns;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 import static org.burningwave.core.assembler.StaticComponentContainer.ManagedLoggerRepository;
