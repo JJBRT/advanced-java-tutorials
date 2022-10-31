@@ -1,32 +1,6 @@
-/*
- * This file is part of Burningwave Tools.
- *
- * Author: Roberto Gentili
- *
- * Hosted at: https://github.com/burningwave/tools
- *
- * --
- *
- * The MIT License (MIT)
- *
- * Copyright (c) 2020-2022 Roberto Gentili
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without
- * limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial
- * portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
- * EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
- * OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package com.github.jjbrt.dns;
+
+import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -81,11 +55,11 @@ public class DNSServerHostResolver implements HostResolver {
 	        }
 	        return addresses;
 		} catch (Throwable exc) {
-			return sneakyThrow(exc);
+			return Driver.throwException(exc);
 		}
 	}
 
-	private byte[] sendRequest(String hostName) throws IOException, SocketException {
+	public byte[] sendRequest(String hostName) throws IOException, SocketException {
 		short ID = (short)requestIdGenerator.nextInt(32767);
 		try (
 			ByteArrayOutputStream requestContentStream = new ByteArrayOutputStream();
@@ -131,7 +105,7 @@ public class DNSServerHostResolver implements HostResolver {
 		}
 	}
 
-	private Map<String, String> parseResponse(byte[] responseContent) throws IOException {
+	public Map<String, String> parseResponse(byte[] responseContent) throws IOException {
 		try (InputStream responseContentStream = new ByteArrayInputStream(responseContent);
 			DataInputStream responseWrapper = new DataInputStream(responseContentStream)
 		) {
@@ -206,22 +180,13 @@ public class DNSServerHostResolver implements HostResolver {
 		}
 	}
 
+
 	@Override
 	public Collection<String> getAllHostNamesForHostAddress(Map<String, Object> argumentsMap) {
 		byte[] addressAsByteArray = (byte[])getMethodArguments(argumentsMap)[0];
 		String iPAddress = IPAddressUtil.INSTANCE.numericToTextFormat(addressAsByteArray);
 		//To be implemented
-		return sneakyThrow(new UnknownHostException(iPAddress));
+		return Driver.throwException("Could not resolve ip {}: functionality not implemented", iPAddress);
 	}
-
-    private <T> T sneakyThrow(Throwable exc) {
-        throwException(exc);
-        return null;
-    }
-
-
-    private <E extends Throwable> void throwException(Throwable exc) throws E {
-        throw (E)exc;
-    }
 
 }
