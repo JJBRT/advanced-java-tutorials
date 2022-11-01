@@ -24,11 +24,11 @@ import org.xbill.DNS.Type;
 import org.xbill.DNS.lookup.LookupResult;
 import org.xbill.DNS.lookup.LookupSession;
 
-public class DNSServerHostResolver implements HostResolver {
+public class DNSJavaHostResolver implements HostResolver {
 
 	private LookupSession lookupSession;
 
-	public DNSServerHostResolver(String dNSServerIP) {
+	public DNSJavaHostResolver(String dNSServerIP) {
 		try {
 			lookupSession = LookupSession.builder().resolver(
 				new SimpleResolver(InetAddress.getByName(dNSServerIP))

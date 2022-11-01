@@ -48,7 +48,7 @@ public class HostNameResolutionFromYAMLCustomizer {
 			new MappedHostResolver(() -> (List<Map<String, Object>>)configuration.get("hostAliases"))
 		);
 		((List<Map<String, Object>>)((Map<String, Object>)configuration.get("dns")).get("servers")).stream().forEach(serverMap ->
-			resolvers.add(new DNSServerHostResolver((String)serverMap.get("ip")))
+			resolvers.add(new DNSJavaHostResolver((String)serverMap.get("ip")))
 		);
 
 		//This is the system default resolving wrapper
