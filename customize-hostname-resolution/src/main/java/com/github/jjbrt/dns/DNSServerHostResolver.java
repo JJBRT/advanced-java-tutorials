@@ -81,13 +81,13 @@ public class DNSServerHostResolver implements HostResolver {
 		Consumer<Record> recordProcessor,
 		int... types
 	) {
-    	Collection<CompletableFuture<LookupResult>> hostNamesRetrievers = new ArrayList<>();
+    	Collection<CompletableFuture<LookupResult>> hostInfoRetrievers = new ArrayList<>();
     	for (int type : types) {
-    		hostNamesRetrievers.add(
+    		hostInfoRetrievers.add(
 				lookupSession.lookupAsync(nameSupplier.get(), type).toCompletableFuture()
 			);
     	}
-    	hostNamesRetrievers.stream().forEach(hostNamesRetriever -> {
+    	hostInfoRetrievers.stream().forEach(hostNamesRetriever -> {
     		try {
     			List<Record> records = hostNamesRetriever.join().getRecords();
     			if (records != null) {
