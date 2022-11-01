@@ -76,7 +76,7 @@ public class DNSJavaHostResolver implements HostResolver {
 		return hostNames;
 	}
 
-	public void findAndProcessHostInfos(
+	private void findAndProcessHostInfos(
 		Supplier<Name> nameSupplier,
 		Consumer<Record> recordProcessor,
 		int... types
