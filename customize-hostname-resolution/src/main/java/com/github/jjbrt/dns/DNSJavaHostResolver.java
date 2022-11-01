@@ -13,9 +13,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.burningwave.tools.dns.HostResolver;
+import org.burningwave.tools.dns.IPAddressUtil;
 import org.xbill.DNS.AAAARecord;
 import org.xbill.DNS.ARecord;
 import org.xbill.DNS.Name;
+import org.xbill.DNS.PTRRecord;
 import org.xbill.DNS.Record;
 import org.xbill.DNS.ReverseMap;
 import org.xbill.DNS.SimpleResolver;
@@ -40,8 +42,11 @@ public class DNSJavaHostResolver implements HostResolver {
 
 	@Override
 	public Collection<InetAddress> getAllAddressesForHostName(Map<String, Object> argumentsMap) {
+		return getAllAddressesForHostName((String)getMethodArguments(argumentsMap)[0]);
+	}
+
+	public Collection<InetAddress> getAllAddressesForHostName(String hostName) {
 		Collection<InetAddress> hostInfos = new ArrayList<>();
-		String hostName = (String)getMethodArguments(argumentsMap)[0];
 		findAndProcessHostInfos(
 			() -> {
 				try {
@@ -65,12 +70,20 @@ public class DNSJavaHostResolver implements HostResolver {
 
 	@Override
 	public Collection<String> getAllHostNamesForHostAddress(Map<String, Object> argumentsMap) {
+		return getAllHostNamesForHostAddress((byte[])getMethodArguments(argumentsMap)[0]);
+	}
+
+	public Collection<String> getAllHostNamesForHostAddress(String iPAddress) {
+		return getAllHostNamesForHostAddress(IPAddressUtil.INSTANCE.textToNumericFormat(iPAddress));
+	}
+
+	public Collection<String> getAllHostNamesForHostAddress(byte[] address) {
 		Collection<String> hostNames = new ArrayList<>();
 		findAndProcessHostInfos(
 			() ->
-				ReverseMap.fromAddress((byte[])getMethodArguments(argumentsMap)[0]),
+				ReverseMap.fromAddress(address),
 			record ->
-				hostNames.add(record.rdataToString()),
+				hostNames.add(((PTRRecord)record).getTarget().toString(true)),
 			Type.PTR
 		);
 		return hostNames;
