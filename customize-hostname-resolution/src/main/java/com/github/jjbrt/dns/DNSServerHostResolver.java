@@ -2,191 +2,104 @@ package com.github.jjbrt.dns;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.burningwave.tools.dns.HostResolver;
-import org.burningwave.tools.dns.IPAddressUtil;
+import org.xbill.DNS.AAAARecord;
+import org.xbill.DNS.ARecord;
+import org.xbill.DNS.Name;
+import org.xbill.DNS.Record;
+import org.xbill.DNS.ReverseMap;
+import org.xbill.DNS.SimpleResolver;
+import org.xbill.DNS.TextParseException;
+import org.xbill.DNS.Type;
+import org.xbill.DNS.lookup.LookupResult;
+import org.xbill.DNS.lookup.LookupSession;
 
 public class DNSServerHostResolver implements HostResolver {
-	private static Random requestIdGenerator;
-
-	static {
-		requestIdGenerator = new Random();
-	}
 
 	private InetAddress dNSServerIP;
-	private int dNSServerPort;
 
-	public DNSServerHostResolver(String dNSServerIP, int dNSServerPort) throws UnknownHostException {
-		this.dNSServerIP = InetAddress.getByName(dNSServerIP);
-		this.dNSServerPort = dNSServerPort;
+	public DNSServerHostResolver(String dNSServerIP) {
+		try {
+			this.dNSServerIP = InetAddress.getByName(dNSServerIP);
+		} catch (UnknownHostException exc) {
+			Driver.throwException(exc);
+		}
 	}
 
 	@Override
 	public Collection<InetAddress> getAllAddressesForHostName(Map<String, Object> argumentsMap) {
-		return resolveHostForName((String)getMethodArguments(argumentsMap)[0]);
-	}
-
-	public Collection<InetAddress> resolveHostForName(String hostName) {
-		try {
-			Collection<InetAddress> addresses = new ArrayList<>();
-			byte[] response = sendRequest(hostName);
-	        Map<String, String> iPToDomainMap = parseResponse(response);
-	        for (Map.Entry<String, String> iPToDomain : iPToDomainMap.entrySet()) {
-	        	addresses.add(InetAddress.getByAddress(iPToDomain.getValue(), IPAddressUtil.INSTANCE.textToNumericFormat(iPToDomain.getKey())));
-	        }
-	        return addresses;
-		} catch (Throwable exc) {
-			return Driver.throwException(exc);
-		}
-	}
-
-	public byte[] sendRequest(String hostName) throws IOException, SocketException {
-		short ID = (short)requestIdGenerator.nextInt(32767);
-		try (
-			ByteArrayOutputStream requestContentStream = new ByteArrayOutputStream();
-			DataOutputStream requestWrapper = new DataOutputStream(requestContentStream);
-		) {
-			short requestFlags = Short.parseShort("0000000100000000", 2);
-			ByteBuffer byteBuffer = ByteBuffer.allocate(2).putShort(requestFlags);
-			byte[] flagsByteArray = byteBuffer.array();
-
-			short QDCOUNT = 1;
-			short ANCOUNT = 0;
-			short NSCOUNT = 0;
-			short ARCOUNT = 0;
-
-			requestWrapper.writeShort(ID);
-			requestWrapper.write(flagsByteArray);
-			requestWrapper.writeShort(QDCOUNT);
-			requestWrapper.writeShort(ANCOUNT);
-			requestWrapper.writeShort(NSCOUNT);
-			requestWrapper.writeShort(ARCOUNT);
-
-			String[] domainParts = hostName.split("\\.");
-
-			for (int i = 0; i < domainParts.length; i++) {
-			    byte[] domainBytes = domainParts[i].getBytes(StandardCharsets.UTF_8);
-			    requestWrapper.writeByte(domainBytes.length);
-			    requestWrapper.write(domainBytes);
-			}
-			requestWrapper.writeByte(0);
-			requestWrapper.writeShort(1);
-			requestWrapper.writeShort(1);
-			byte[] dnsFrame = requestContentStream.toByteArray();
-			DatagramPacket packet;
-			byte[] response;
-			try (DatagramSocket socket = new DatagramSocket()){
-			    DatagramPacket dnsReqPacket = new DatagramPacket(dnsFrame, dnsFrame.length, dNSServerIP, dNSServerPort);
-			    socket.send(dnsReqPacket);
-			    response = new byte[1024];
-			    packet = new DatagramPacket(response, response.length);
-			    socket.receive(packet);
-			}
-			return response;
-		}
-	}
-
-	public Map<String, String> parseResponse(byte[] responseContent) throws IOException {
-		try (InputStream responseContentStream = new ByteArrayInputStream(responseContent);
-			DataInputStream responseWrapper = new DataInputStream(responseContentStream)
-		) {
-			responseWrapper.skip(6);
-			short ANCOUNT = responseWrapper.readShort();
-			responseWrapper.skip(4);
-			int recLen;
-			while ((recLen = responseWrapper.readByte()) > 0) {
-			    byte[] record = new byte[recLen];
-			    for (int i = 0; i < recLen; i++) {
-			        record[i] = responseWrapper.readByte();
-			    }
-			}
-			responseWrapper.skip(4);
-			byte firstBytes = responseWrapper.readByte();
-			int firstTwoBits = (firstBytes & 0b11000000) >>> 6;
-			Map<String, String> ipToDomainMap = new HashMap<>();
-			try (ByteArrayOutputStream label = new ByteArrayOutputStream();) {
-				for(int i = 0; i < ANCOUNT; i++) {
-				    if(firstTwoBits == 3) {
-				        byte currentByte = responseWrapper.readByte();
-				        boolean stop = false;
-				        byte[] newArray = Arrays.copyOfRange(responseContent, currentByte, responseContent.length);
-				        try (InputStream responseSectionContentStream = new ByteArrayInputStream(newArray);
-			        		DataInputStream responseSectionWrapper = new DataInputStream(responseSectionContentStream);
-		        		) {
-					        ArrayList<Integer> RDATA = new ArrayList<>();
-					        ArrayList<String> DOMAINS = new ArrayList<>();
-					        while(!stop) {
-					            byte nextByte = responseSectionWrapper.readByte();
-					            if(nextByte != 0) {
-					                byte[] currentLabel = new byte[nextByte];
-					                for(int j = 0; j < nextByte; j++) {
-					                    currentLabel[j] = responseSectionWrapper.readByte();
-					                }
-					                label.write(currentLabel);
-					            } else {
-					                stop = true;
-					                responseWrapper.skip(8);
-					                int RDLENGTH = responseWrapper.readShort();
-					                for(int s = 0; s < RDLENGTH; s++) {
-					                    int nx = responseWrapper.readByte() & 255;
-					                    RDATA.add(nx);
-					                }
-					            }
-					            DOMAINS.add(new String( label.toByteArray(), StandardCharsets.UTF_8));
-					            label.reset();
-					        }
-
-					        StringBuilder ip = new StringBuilder();
-					        StringBuilder domainSb = new StringBuilder();
-					        for(Integer ipPart:RDATA) {
-					            ip.append(ipPart).append(".");
-					        }
-
-					        for(String domainPart:DOMAINS) {
-					            if(!domainPart.equals("")) {
-					                domainSb.append(domainPart).append(".");
-					            }
-					        }
-					        String domainFinal = domainSb.toString();
-					        String ipFinal = ip.toString();
-					        ipToDomainMap.put(ipFinal.substring(0, ipFinal.length()-1), domainFinal.substring(0, domainFinal.length()-1));
-				        }
-				    }
-
-				    firstBytes = responseWrapper.readByte();
-				    firstTwoBits = (firstBytes & 0b11000000) >>> 6;
+		Collection<InetAddress> hostInfos = new ArrayList<>();
+		String hostName = (String)getMethodArguments(argumentsMap)[0];
+		findAndProcessHostInfos(
+			() -> {
+				try {
+					return Name.fromString(hostName.endsWith(".") ? hostName : hostName + ".");
+				} catch (TextParseException exc) {
+					return Driver.throwException(exc);
 				}
-			}
-			return ipToDomainMap;
-		}
+			},
+			record -> {
+				if (record instanceof ARecord) {
+					hostInfos.add(((ARecord)record).getAddress());
+				} else if (record instanceof AAAARecord) {
+					hostInfos.add(((AAAARecord)record).getAddress());
+				}
+			},
+			Type.A, Type.AAAA
+		);
+		return hostInfos;
 	}
 
 
 	@Override
 	public Collection<String> getAllHostNamesForHostAddress(Map<String, Object> argumentsMap) {
-		byte[] addressAsByteArray = (byte[])getMethodArguments(argumentsMap)[0];
-		String iPAddress = IPAddressUtil.INSTANCE.numericToTextFormat(addressAsByteArray);
-		//To be implemented
-		return Driver.throwException("Could not resolve ip {}: functionality not implemented", iPAddress);
+		Collection<String> hostNames = new ArrayList<>();
+		findAndProcessHostInfos(
+			() ->
+				ReverseMap.fromAddress((byte[])getMethodArguments(argumentsMap)[0]),
+			record ->
+				hostNames.add(record.rdataToString()),
+			Type.PTR
+		);
+		return hostNames;
+	}
+
+	public void findAndProcessHostInfos(
+		Supplier<Name> nameSupplier,
+		Consumer<Record> recordProcessor,
+		int... types
+	) {
+		LookupSession lookupSession = LookupSession.builder().resolver(
+			new SimpleResolver(dNSServerIP)
+		).build();
+    	Collection<CompletableFuture<LookupResult>> hostNamesRetrievers = new ArrayList<>();
+    	for (int type : types) {
+    		hostNamesRetrievers.add(
+				lookupSession.lookupAsync(nameSupplier.get(), type).toCompletableFuture()
+			);
+    	}
+    	hostNamesRetrievers.stream().forEach(hostNamesRetriever -> {
+    		try {
+    			List<Record> records = hostNamesRetriever.join().getRecords();
+    			if (records != null) {
+    				for (Record record : records) {
+    					recordProcessor.accept(record);
+    				}
+    			}
+    		} catch (Throwable exc) {
+
+    		}
+    	});
 	}
 
 }

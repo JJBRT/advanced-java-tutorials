@@ -6,8 +6,8 @@
 	<groupId>com.github.jjbrt.java-tutorials</groupId>
 	<artifactId>customize-hostname-resolution</artifactId>
 
-	<name>Spring Boot application adapter tutorial</name>
-	<description>Spring Boot application adapter tutorial</description>
+	<name>Customizing host resolution tutorial</name>
+	<description>Customizing host resolution tutorial</description>
 	<version>1.0.0</version>
 
 	<properties>
@@ -35,6 +35,12 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        
+        <dependency>
+		    <groupId>dnsjava</groupId>
+		    <artifactId>dnsjava</artifactId>
+		    <version>3.5.1</version>
+		</dependency>
 
 	</dependencies>
 
