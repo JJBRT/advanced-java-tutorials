@@ -26,11 +26,13 @@ import org.xbill.DNS.lookup.LookupSession;
 
 public class DNSServerHostResolver implements HostResolver {
 
-	private InetAddress dNSServerIP;
+	private LookupSession lookupSession;
 
 	public DNSServerHostResolver(String dNSServerIP) {
 		try {
-			this.dNSServerIP = InetAddress.getByName(dNSServerIP);
+			lookupSession = LookupSession.builder().resolver(
+				new SimpleResolver(InetAddress.getByName(dNSServerIP))
+			).build();
 		} catch (UnknownHostException exc) {
 			Driver.throwException(exc);
 		}
@@ -79,9 +81,6 @@ public class DNSServerHostResolver implements HostResolver {
 		Consumer<Record> recordProcessor,
 		int... types
 	) {
-		LookupSession lookupSession = LookupSession.builder().resolver(
-			new SimpleResolver(dNSServerIP)
-		).build();
     	Collection<CompletableFuture<LookupResult>> hostNamesRetrievers = new ArrayList<>();
     	for (int type : types) {
     		hostNamesRetrievers.add(
