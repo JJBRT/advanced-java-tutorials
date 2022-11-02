@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

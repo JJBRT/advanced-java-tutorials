@@ -4,7 +4,6 @@ import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
