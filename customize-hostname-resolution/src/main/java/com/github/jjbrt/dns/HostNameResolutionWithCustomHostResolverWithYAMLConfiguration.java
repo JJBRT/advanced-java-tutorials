@@ -23,7 +23,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 
 @SuppressWarnings("unchecked")
-public class HostNameResolutionFromYAMLCustomizer {
+public class HostNameResolutionWithCustomHostResolverWithYAMLConfiguration {
 
 	public static void main(String[] args) {
         try {
@@ -48,7 +48,12 @@ public class HostNameResolutionFromYAMLCustomizer {
 			new MappedHostResolver(() -> (List<Map<String, Object>>)configuration.get("hostAliases"))
 		);
 		((List<Map<String, Object>>)((Map<String, Object>)configuration.get("dns")).get("servers")).stream().forEach(serverMap ->
-			resolvers.add(new DNSClientHostResolver((String)serverMap.get("ip")))
+			resolvers.add(
+				new DNSClientHostResolver(
+					(String)serverMap.get("ip"),
+					(Integer)serverMap.get("port")
+				)
+			)
 		);
 
 		//This is the system default resolving wrapper
