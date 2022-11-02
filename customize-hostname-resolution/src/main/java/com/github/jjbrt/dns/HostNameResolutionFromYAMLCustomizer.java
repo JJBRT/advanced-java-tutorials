@@ -7,16 +7,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Driver;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.burningwave.core.assembler.ComponentContainer;
-import org.burningwave.tools.dns.DefaultHostResolver;
-import org.burningwave.tools.dns.HostResolutionRequestInterceptor;
-import org.burningwave.tools.dns.HostResolver;
-import org.burningwave.tools.dns.MappedHostResolver;
+import org.burningwave.tools.net.DefaultHostResolver;
+import org.burningwave.tools.net.HostResolutionRequestInterceptor;
+import org.burningwave.tools.net.HostResolver;
+import org.burningwave.tools.net.MappedHostResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -42,8 +42,8 @@ public class HostNameResolutionFromYAMLCustomizer {
 		}
     }
 
-    public static void execute(Map<String, Object> configuration) {
-		Collection<HostResolver> resolvers = new ArrayList<>();
+    public static void execute(Map<String, Object> configuration) throws UnknownHostException, IOException {
+		List<HostResolver> resolvers = new ArrayList<>();
 		resolvers.add(
 			new MappedHostResolver(() -> (List<Map<String, Object>>)configuration.get("hostAliases"))
 		);

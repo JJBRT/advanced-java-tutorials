@@ -4,6 +4,7 @@ import static org.burningwave.core.assembler.StaticComponentContainer.Driver;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,8 +13,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.burningwave.tools.dns.HostResolver;
-import org.burningwave.tools.dns.IPAddressUtil;
+import org.burningwave.tools.net.HostResolver;
+import org.burningwave.tools.net.IPAddressUtil;
 import org.xbill.DNS.AAAARecord;
 import org.xbill.DNS.ARecord;
 import org.xbill.DNS.Name;

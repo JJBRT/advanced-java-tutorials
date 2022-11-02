@@ -7,9 +7,9 @@ import java.net.UnknownHostException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.burningwave.tools.dns.DefaultHostResolver;
-import org.burningwave.tools.dns.HostResolutionRequestInterceptor;
-import org.burningwave.tools.dns.MappedHostResolver;
+import org.burningwave.tools.net.DefaultHostResolver;
+import org.burningwave.tools.net.HostResolutionRequestInterceptor;
+import org.burningwave.tools.net.MappedHostResolver;
 
 public class HostNameResolutionCustomizer {
 
