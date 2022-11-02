@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.burningwave.core.assembler.ComponentContainer;
+import org.burningwave.tools.net.DNSClientHostResolver;
 import org.burningwave.tools.net.DefaultHostResolver;
 import org.burningwave.tools.net.HostResolutionRequestInterceptor;
 import org.burningwave.tools.net.HostResolver;
@@ -47,7 +48,7 @@ public class HostNameResolutionFromYAMLCustomizer {
 			new MappedHostResolver(() -> (List<Map<String, Object>>)configuration.get("hostAliases"))
 		);
 		((List<Map<String, Object>>)((Map<String, Object>)configuration.get("dns")).get("servers")).stream().forEach(serverMap ->
-			resolvers.add(new DNSJavaHostResolver((String)serverMap.get("ip")))
+			resolvers.add(new DNSClientHostResolver((String)serverMap.get("ip")))
 		);
 
 		//This is the system default resolving wrapper
