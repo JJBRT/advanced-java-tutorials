@@ -26,7 +26,7 @@ public class HostNameResolutionWithCustomHostResolverWithYAMLConfiguration {
 
 	public static void main(String[] args) {
         try {
-			execute(loadConfiguration("hosts.yml"));
+			execute(loadConfiguration("config.yml"));
 		} catch (Throwable exc) {
 			exc.printStackTrace();
 		}

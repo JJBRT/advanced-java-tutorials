@@ -1,0 +1,21 @@
+hostAliases:
+  - ip: 123.123.123.123
+    hostnames:
+      - my.hostname.one
+      - my.hostname.two
+  - ip: 12.21.34.43
+    hostnames:
+      - my.hostname.three
+      - my.hostname.four
+dns:
+  servers:
+    - ip: 208.67.222.222
+      port: 53
+      ipTypeToSearchFor:
+        - IPV4
+        - IPV6
+    - ip: 208.67.222.220
+      port: 53
+      ipTypeToSearchFor:
+        - IPV4
+        - IPV6

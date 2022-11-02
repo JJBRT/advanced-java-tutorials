@@ -27,7 +27,7 @@ public class HostNameResolutionWithDNSClientHostResolverWithYAMLConfiguration {
 
 	public static void main(String[] args) {
         try {
-			execute(loadConfiguration("hosts.yml"));
+			execute(loadConfiguration("config.yml"));
 		} catch (Throwable exc) {
 			exc.printStackTrace();
 		}
@@ -44,16 +44,13 @@ public class HostNameResolutionWithDNSClientHostResolverWithYAMLConfiguration {
 
     public static void execute(Map<String, Object> configuration) throws UnknownHostException, IOException {
 		List<HostResolver> resolvers = new ArrayList<>();
+
 		resolvers.add(
 			new MappedHostResolver(() -> (List<Map<String, Object>>)configuration.get("hostAliases"))
 		);
-		((List<Map<String, Object>>)((Map<String, Object>)configuration.get("dns")).get("servers")).stream().forEach(serverMap ->
-			resolvers.add(
-				new DNSClientHostResolver(
-					(String)serverMap.get("ip"),
-					(Integer)serverMap.get("port")
-				)
-			)
+
+		resolvers.addAll(
+			DNSClientHostResolver.newInstances(() -> (List<Map<String, Object>>)((Map<String, Object>)configuration.get("dns")).get("servers"))
 		);
 
 		//This is the system default resolving wrapper
