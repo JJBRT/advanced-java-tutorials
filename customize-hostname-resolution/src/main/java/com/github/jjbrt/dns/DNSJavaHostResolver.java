@@ -82,8 +82,8 @@ public class DNSJavaHostResolver implements HostResolver {
 	}
 
 	@Override
-	public Collection<InetAddress> getAllAddressesForHostName(Map<String, Object> argumentsMap) {
-		return getAllAddressesForHostName((String)getMethodArguments(argumentsMap)[0]);
+	public Collection<InetAddress> getAllAddressesForHostName(Map<String, Object> argumentMap) {
+		return getAllAddressesForHostName((String)getMethodArguments(argumentMap)[0]);
 	}
 
 	public Collection<InetAddress> getAllAddressesForHostName(String hostName) {
@@ -110,8 +110,8 @@ public class DNSJavaHostResolver implements HostResolver {
 
 
 	@Override
-	public Collection<String> getAllHostNamesForHostAddress(Map<String, Object> argumentsMap) {
-		return getAllHostNamesForHostAddress((byte[])getMethodArguments(argumentsMap)[0]);
+	public Collection<String> getAllHostNamesForHostAddress(Map<String, Object> argumentMap) {
+		return getAllHostNamesForHostAddress((byte[])getMethodArguments(argumentMap)[0]);
 	}
 
 	public Collection<String> getAllHostNamesForHostAddress(String iPAddress) {
