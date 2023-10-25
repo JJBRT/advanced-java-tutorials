@@ -11,6 +11,7 @@ A collection of examples about advanced Java programming. Here you will find tut
 * [how to export all modules to all modules at runtime on Java 9 and later](https://jim-jerald-burton.medium.com/exporting-all-modules-to-all-modules-at-runtime-on-java-9-and-later-3517eb479701)
 * [how to iterate collections and arrays in parallel by setting thread priority](https://dev.to/bw_software/iterating-collections-and-arrays-in-parallel-5acg)
 * [how to configure host name resolution to use a universal custom host name resolver](https://dev.to/jjbrt/how-to-configure-hostname-resolution-to-use-a-universal-custom-hostname-resolver-in-java-14p0)
+* [how to query and validate a JSON document](https://dev.to/jjbrt/querying-and-validating-a-json-document-in-java-323i)
 
 <br/>
 
